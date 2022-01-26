@@ -23,17 +23,16 @@
       <!-- Search box -->
       <div class="row content-row">
         <div class="col-12 col-md-3 bg-light pt-4">
-              <h4>Search for a location</h4>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Town/City" aria-label="Recipient's username" aria-describedby="button-addon2" />
+          <h4>Search for a location</h4>
+            <form id="cityForm" class="input-group mb-3">
+            <input type="text" id="cityLocation" class="form-control" placeholder="Town/City" aria-label="Town/City" aria-describedby="button-addon2" />
             <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
             </div>
-          </div>
+          </form>
         <!-- Previous searches to be displayed using local storage -->
         <div class="card">
-          <ul id="previous-searches" class="list-group list-group-flush">
-          </ul>
+          <ul id="previous-searches" class="list-group list-group-flush"></ul>
         </div>
       </div>
       <!-- Weather cards -->
@@ -43,7 +42,7 @@
           <div class="card-body">
             <h5 class="card-title">City Name(DATE)</h5>
             <h6 class="card-subtitle mb-2">Temp:</h6>
-            <h6 class="card-subtitle mb-2">Wind:</h6>
+            <h6 class="card-subtitle mb-2">Wind speed:</h6>
             <h6 class="card-subtitle mb-2">Humidity:</h6>
             <h6 class="card-subtitle mb-2">UV Index:</h6>
           </div>
