@@ -1,6 +1,57 @@
-// storign API Key in a global variable
+// storing API Key in a global variable
 var apiKey = '6b1a2201b5db8a2ed60768e430f6c667';
+
 var cityFormEl = document.getElementById('cityForm');
+
+// getting City name element
+var cityNameEl = document.getElementById('cityName');
+
+// getting date elements
+var dateEl0 = document.getElementById('date0');
+var dateEl1 = document.getElementById('date1');
+var dateEl2 = document.getElementById('date2');
+var dateEl3 = document.getElementById('date3');
+var dateEl4 = document.getElementById('date4');
+var dateEl5 = document.getElementById('date5');
+
+// getting temperature elements
+var tempEl0 = document.getElementById('temp0');
+var tempEl1 = document.getElementById('temp1');
+var tempEl2 = document.getElementById('temp2');
+var tempEl3 = document.getElementById('temp3');
+var tempEl4 = document.getElementById('temp4');
+var tempEl5 = document.getElementById('temp5');
+
+// getting windspeed elements
+var windEl0 = document.getElementById('wind0');
+var windEl1 = document.getElementById('wind1');
+var windEl2 = document.getElementById('wind2');
+var windEl3 = document.getElementById('wind3');
+var windEl4 = document.getElementById('wind4');
+var windEl5 = document.getElementById('wind5');
+
+// getting humidity elements
+var humidEl0 = document.getElementById('humid0');
+var humidEl1 = document.getElementById('humid1');
+var humidEl2 = document.getElementById('humid2');
+var humidEl3 = document.getElementById('humid3');
+var humidEl4 = document.getElementById('humid4');
+var humidEl5 = document.getElementById('humid5');
+
+// getting UV elements
+var uvIndexEL0 = document.getElementById('uvIndex0');
+var uvIndexEL1 = document.getElementById('uvIndex1');
+var uvIndexEL2 = document.getElementById('uvIndex2');
+var uvIndexEL3 = document.getElementById('uvIndex3');
+var uvIndexEL4 = document.getElementById('uvIndex4');
+var uvIndexEL5 = document.getElementById('uvIndex5');
+
+var dateArray = [];
+var tempArray = [];
+var windArray = [];
+var humidArray = [];
+var uvArray = [];
+var iconArray = [];
 
 cityFormEl.addEventListener('submit', function (event) {
   event.preventDefault();
@@ -16,8 +67,10 @@ cityFormEl.addEventListener('submit', function (event) {
       for (var i = 0; i < data.length; i++) {
         var coordinates = data[i];
 
+        var cityName = coordinates.name;
         var latCoordinates = coordinates.lat;
         var lonCoordinates = coordinates.lon;
+        console.log(cityName);
         console.log(latCoordinates);
         console.log(lonCoordinates);
 
@@ -28,23 +81,76 @@ cityFormEl.addEventListener('submit', function (event) {
           })
           .then(function (data) {
             console.log(data);
+
+            // looping 6 times as I want the current day and the next 5 days forecast
             for (var i = 0; i < 6; i++) {
               var weatherInfo = data.daily[i];
 
               var date = weatherInfo.dt;
-              var temp = weatherInfo.temp.day;
-              var windspeed = weatherInfo.wind_speed;
-              var humidity = weatherInfo.humidity;
-              var uvIndex = weatherInfo.uvi;
-              var weatherIcon = weatherInfo.weather[0].icon;
+              dateArray.push(date);
 
-              console.log(date);
-              console.log(temp);
-              console.log(windspeed);
-              console.log(humidity);
-              console.log(uvIndex);
-              console.log(weatherIcon);
+              var temp = weatherInfo.temp.day;
+              tempArray.push(temp);
+
+              var windspeed = weatherInfo.wind_speed;
+              windArray.push(windspeed);
+
+              var humidity = weatherInfo.humidity;
+              humidArray.push(humidity);
+
+              var uvIndex = weatherInfo.uvi;
+              uvArray.push(uvIndex);
+
+              var weatherIcon = weatherInfo.weather[0].icon;
+              iconArray.push(weatherIcon);
             }
+            function updateWeatherBoxes() {
+              // displaying the city name
+              cityNameEl.textContent = cityName;
+
+              // displaying the date
+              dateEl0.textContent = dateArray[0];
+              dateEl1.textContent = dateArray[1];
+              dateEl2.textContent = dateArray[2];
+              dateEl3.textContent = dateArray[3];
+              dateEl4.textContent = dateArray[4];
+              dateEl5.textContent = dateArray[5];
+              // displaying the temperature
+              tempEl0.textContent = 'Temp: ' + tempArray[0] + '°C';
+              tempEl1.textContent = 'Temp: ' + tempArray[1] + '°C';
+              tempEl2.textContent = 'Temp: ' + tempArray[2] + '°C';
+              tempEl3.textContent = 'Temp: ' + tempArray[3] + '°C';
+              tempEl4.textContent = 'Temp: ' + tempArray[4] + '°C';
+              tempEl5.textContent = 'Temp: ' + tempArray[5] + '°C';
+              // displaying the windspeed
+              windEl0.textContent = 'Windspeed: ' + windArray[0] + 'm/s';
+              windEl1.textContent = 'Windspeed: ' + windArray[1] + 'm/s';
+              windEl2.textContent = 'Windspeed: ' + windArray[2] + 'm/s';
+              windEl3.textContent = 'Windspeed: ' + windArray[3] + 'm/s';
+              windEl4.textContent = 'Windspeed: ' + windArray[4] + 'm/s';
+              windEl5.textContent = 'Windspeed: ' + windArray[5] + 'm/s';
+              // displaying the humidity
+              humidEl0.textContent = 'Humidity: ' + humidArray[0] + '%';
+              humidEl1.textContent = 'Humidity: ' + humidArray[1] + '%';
+              humidEl2.textContent = 'Humidity: ' + humidArray[2] + '%';
+              humidEl3.textContent = 'Humidity: ' + humidArray[3] + '%';
+              humidEl4.textContent = 'Humidity: ' + humidArray[4] + '%';
+              humidEl5.textContent = 'Humidity: ' + humidArray[5] + '%';
+              // displaying the UV Index
+              uvIndexEL0.textContent = 'UV Index: ' + uvArray[0];
+              uvIndexEL1.textContent = 'UV Index: ' + uvArray[1];
+              uvIndexEL2.textContent = 'UV Index: ' + uvArray[2];
+              uvIndexEL3.textContent = 'UV Index: ' + uvArray[3];
+              uvIndexEL4.textContent = 'UV Index: ' + uvArray[4];
+              uvIndexEL5.textContent = 'UV Index: ' + uvArray[5];
+            }
+            updateWeatherBoxes();
+            console.log(dateArray);
+            console.log(tempArray);
+            console.log(windArray);
+            console.log(humidArray);
+            console.log(uvArray);
+            console.log(iconArray);
           });
       }
     });
