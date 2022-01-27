@@ -40,11 +40,6 @@ var humidEl5 = document.getElementById('humid5');
 
 // getting UV elements
 var uvIndexEL0 = document.getElementById('uvIndex0');
-var uvIndexEL1 = document.getElementById('uvIndex1');
-var uvIndexEL2 = document.getElementById('uvIndex2');
-var uvIndexEL3 = document.getElementById('uvIndex3');
-var uvIndexEL4 = document.getElementById('uvIndex4');
-var uvIndexEL5 = document.getElementById('uvIndex5');
 
 // getting icon elements
 var iconEl0 = document.getElementById('icon0');
@@ -124,6 +119,7 @@ cityFormEl.addEventListener('submit', function (event) {
 
             weatherCardsEl.classList.remove('hide');
 
+            uvRiskColour();
             updateWeatherBoxes();
             console.log(dateArray);
             console.log(tempArray);
@@ -167,12 +163,8 @@ function updateWeatherBoxes() {
   humidEl4.textContent = 'Humidity: ' + humidArray[4] + '%';
   humidEl5.textContent = 'Humidity: ' + humidArray[5] + '%';
   // displaying the UV Index
-  uvIndexEL0.textContent = 'UV Index: ' + uvArray[0];
-  uvIndexEL1.textContent = 'UV Index: ' + uvArray[1];
-  uvIndexEL2.textContent = 'UV Index: ' + uvArray[2];
-  uvIndexEL3.textContent = 'UV Index: ' + uvArray[3];
-  uvIndexEL4.textContent = 'UV Index: ' + uvArray[4];
-  uvIndexEL5.textContent = 'UV Index: ' + uvArray[5];
+  uvIndexEL0.textContent = uvArray[0];
+
   // displaying the icons
   iconEl0.src = 'http://openweathermap.org/img/wn/' + iconArray[0] + '@2x.png';
   iconEl1.src = 'http://openweathermap.org/img/wn/' + iconArray[1] + '@2x.png';
@@ -200,5 +192,19 @@ function clearPreviousData() {
   }
   if (iconArray.length !== 0) {
     iconArray = [];
+  }
+}
+
+function uvRiskColour() {
+  if (uvIndexEL0.textContent <= 2) {
+    uvIndexEL0.classList.add('lowRisk');
+  } else if (uvIndexEL0.textContent >= 3 && uvIndexEL0.textContent <= 5) {
+    uvIndexEL0.classList.add('moderateRisk');
+  } else if (uvIndexEL0.textContent >= 6 && uvIndexEL0.textContent <= 7) {
+    uvIndexEL0.classList.add('highRisk');
+  } else if (uvIndexEL0.textContent >= 8 && uvIndexEL0.textContent <= 10) {
+    uvIndexEL0.classList.add('moderateRisk');
+  } else {
+    uvIndexEL0.classList.add('extremeRisk');
   }
 }
