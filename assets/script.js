@@ -54,6 +54,9 @@ var iconEl3 = document.getElementById('icon3');
 var iconEl4 = document.getElementById('icon4');
 var iconEl5 = document.getElementById('icon5');
 
+// getting the weather cards element
+var weatherCardsEl = document.getElementById('weather-cards');
+
 var dateArray = [];
 var tempArray = [];
 var windArray = [];
@@ -63,6 +66,7 @@ var iconArray = [];
 
 cityFormEl.addEventListener('submit', function (event) {
   event.preventDefault();
+  clearPreviousData();
 
   var cityLocation = document.getElementById('cityLocation').value.trim();
 
@@ -118,6 +122,8 @@ cityFormEl.addEventListener('submit', function (event) {
               iconArray.push(weatherIcon);
             }
 
+            weatherCardsEl.classList.remove('hide');
+
             updateWeatherBoxes();
             console.log(dateArray);
             console.log(tempArray);
@@ -167,7 +173,6 @@ function updateWeatherBoxes() {
   uvIndexEL3.textContent = 'UV Index: ' + uvArray[3];
   uvIndexEL4.textContent = 'UV Index: ' + uvArray[4];
   uvIndexEL5.textContent = 'UV Index: ' + uvArray[5];
-
   // displaying the icons
   iconEl0.src = 'http://openweathermap.org/img/wn/' + iconArray[0] + '@2x.png';
   iconEl1.src = 'http://openweathermap.org/img/wn/' + iconArray[1] + '@2x.png';
@@ -175,4 +180,25 @@ function updateWeatherBoxes() {
   iconEl3.src = 'http://openweathermap.org/img/wn/' + iconArray[3] + '@2x.png';
   iconEl4.src = 'http://openweathermap.org/img/wn/' + iconArray[4] + '@2x.png';
   iconEl5.src = 'http://openweathermap.org/img/wn/' + iconArray[5] + '@2x.png';
+}
+
+function clearPreviousData() {
+  if (dateArray.length !== 0) {
+    dateArray = [];
+  }
+  if (tempArray.length !== 0) {
+    tempArray = [];
+  }
+  if (windArray.length !== 0) {
+    windArray = [];
+  }
+  if (humidArray.length !== 0) {
+    humidArray = [];
+  }
+  if (uvArray.length !== 0) {
+    uvArray = [];
+  }
+  if (iconArray.length !== 0) {
+    iconArray = [];
+  }
 }
