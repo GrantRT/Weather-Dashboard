@@ -46,6 +46,14 @@ var uvIndexEL3 = document.getElementById('uvIndex3');
 var uvIndexEL4 = document.getElementById('uvIndex4');
 var uvIndexEL5 = document.getElementById('uvIndex5');
 
+// getting icon elements
+var iconEl0 = document.getElementById('icon0');
+var iconEl1 = document.getElementById('icon1');
+var iconEl2 = document.getElementById('icon2');
+var iconEl3 = document.getElementById('icon3');
+var iconEl4 = document.getElementById('icon4');
+var iconEl5 = document.getElementById('icon5');
+
 var dateArray = [];
 var tempArray = [];
 var windArray = [];
@@ -67,7 +75,10 @@ cityFormEl.addEventListener('submit', function (event) {
       for (var i = 0; i < data.length; i++) {
         var coordinates = data[i];
 
+        // displaying the city name
         var cityName = coordinates.name;
+        cityNameEl.textContent = cityName;
+
         var latCoordinates = coordinates.lat;
         var lonCoordinates = coordinates.lon;
         console.log(cityName);
@@ -87,7 +98,9 @@ cityFormEl.addEventListener('submit', function (event) {
               var weatherInfo = data.daily[i];
 
               var date = weatherInfo.dt;
-              dateArray.push(date);
+              // convert the date from unix to a more user friendly format
+              var unixFormat = moment.unix(date).format('MMM Do YYYY');
+              dateArray.push(unixFormat);
 
               var temp = weatherInfo.temp.day;
               tempArray.push(temp);
@@ -104,46 +117,7 @@ cityFormEl.addEventListener('submit', function (event) {
               var weatherIcon = weatherInfo.weather[0].icon;
               iconArray.push(weatherIcon);
             }
-            function updateWeatherBoxes() {
-              // displaying the city name
-              cityNameEl.textContent = cityName;
 
-              // displaying the date
-              dateEl0.textContent = dateArray[0];
-              dateEl1.textContent = dateArray[1];
-              dateEl2.textContent = dateArray[2];
-              dateEl3.textContent = dateArray[3];
-              dateEl4.textContent = dateArray[4];
-              dateEl5.textContent = dateArray[5];
-              // displaying the temperature
-              tempEl0.textContent = 'Temp: ' + tempArray[0] + '°C';
-              tempEl1.textContent = 'Temp: ' + tempArray[1] + '°C';
-              tempEl2.textContent = 'Temp: ' + tempArray[2] + '°C';
-              tempEl3.textContent = 'Temp: ' + tempArray[3] + '°C';
-              tempEl4.textContent = 'Temp: ' + tempArray[4] + '°C';
-              tempEl5.textContent = 'Temp: ' + tempArray[5] + '°C';
-              // displaying the windspeed
-              windEl0.textContent = 'Windspeed: ' + windArray[0] + 'm/s';
-              windEl1.textContent = 'Windspeed: ' + windArray[1] + 'm/s';
-              windEl2.textContent = 'Windspeed: ' + windArray[2] + 'm/s';
-              windEl3.textContent = 'Windspeed: ' + windArray[3] + 'm/s';
-              windEl4.textContent = 'Windspeed: ' + windArray[4] + 'm/s';
-              windEl5.textContent = 'Windspeed: ' + windArray[5] + 'm/s';
-              // displaying the humidity
-              humidEl0.textContent = 'Humidity: ' + humidArray[0] + '%';
-              humidEl1.textContent = 'Humidity: ' + humidArray[1] + '%';
-              humidEl2.textContent = 'Humidity: ' + humidArray[2] + '%';
-              humidEl3.textContent = 'Humidity: ' + humidArray[3] + '%';
-              humidEl4.textContent = 'Humidity: ' + humidArray[4] + '%';
-              humidEl5.textContent = 'Humidity: ' + humidArray[5] + '%';
-              // displaying the UV Index
-              uvIndexEL0.textContent = 'UV Index: ' + uvArray[0];
-              uvIndexEL1.textContent = 'UV Index: ' + uvArray[1];
-              uvIndexEL2.textContent = 'UV Index: ' + uvArray[2];
-              uvIndexEL3.textContent = 'UV Index: ' + uvArray[3];
-              uvIndexEL4.textContent = 'UV Index: ' + uvArray[4];
-              uvIndexEL5.textContent = 'UV Index: ' + uvArray[5];
-            }
             updateWeatherBoxes();
             console.log(dateArray);
             console.log(tempArray);
@@ -155,3 +129,50 @@ cityFormEl.addEventListener('submit', function (event) {
       }
     });
 });
+
+// function to update the weather boxes with the data
+function updateWeatherBoxes() {
+  // displaying the date
+  dateEl0.textContent = dateArray[0];
+  dateEl1.textContent = dateArray[1];
+  dateEl2.textContent = dateArray[2];
+  dateEl3.textContent = dateArray[3];
+  dateEl4.textContent = dateArray[4];
+  dateEl5.textContent = dateArray[5];
+  // displaying the temperature
+  tempEl0.textContent = 'Temp: ' + tempArray[0] + '°C';
+  tempEl1.textContent = 'Temp: ' + tempArray[1] + '°C';
+  tempEl2.textContent = 'Temp: ' + tempArray[2] + '°C';
+  tempEl3.textContent = 'Temp: ' + tempArray[3] + '°C';
+  tempEl4.textContent = 'Temp: ' + tempArray[4] + '°C';
+  tempEl5.textContent = 'Temp: ' + tempArray[5] + '°C';
+  // displaying the windspeed
+  windEl0.textContent = 'Windspeed: ' + windArray[0] + 'm/s';
+  windEl1.textContent = 'Windspeed: ' + windArray[1] + 'm/s';
+  windEl2.textContent = 'Windspeed: ' + windArray[2] + 'm/s';
+  windEl3.textContent = 'Windspeed: ' + windArray[3] + 'm/s';
+  windEl4.textContent = 'Windspeed: ' + windArray[4] + 'm/s';
+  windEl5.textContent = 'Windspeed: ' + windArray[5] + 'm/s';
+  // displaying the humidity
+  humidEl0.textContent = 'Humidity: ' + humidArray[0] + '%';
+  humidEl1.textContent = 'Humidity: ' + humidArray[1] + '%';
+  humidEl2.textContent = 'Humidity: ' + humidArray[2] + '%';
+  humidEl3.textContent = 'Humidity: ' + humidArray[3] + '%';
+  humidEl4.textContent = 'Humidity: ' + humidArray[4] + '%';
+  humidEl5.textContent = 'Humidity: ' + humidArray[5] + '%';
+  // displaying the UV Index
+  uvIndexEL0.textContent = 'UV Index: ' + uvArray[0];
+  uvIndexEL1.textContent = 'UV Index: ' + uvArray[1];
+  uvIndexEL2.textContent = 'UV Index: ' + uvArray[2];
+  uvIndexEL3.textContent = 'UV Index: ' + uvArray[3];
+  uvIndexEL4.textContent = 'UV Index: ' + uvArray[4];
+  uvIndexEL5.textContent = 'UV Index: ' + uvArray[5];
+
+  // displaying the icons
+  iconEl0.src = 'http://openweathermap.org/img/wn/' + iconArray[0] + '@2x.png';
+  iconEl1.src = 'http://openweathermap.org/img/wn/' + iconArray[1] + '@2x.png';
+  iconEl2.src = 'http://openweathermap.org/img/wn/' + iconArray[2] + '@2x.png';
+  iconEl3.src = 'http://openweathermap.org/img/wn/' + iconArray[3] + '@2x.png';
+  iconEl4.src = 'http://openweathermap.org/img/wn/' + iconArray[4] + '@2x.png';
+  iconEl5.src = 'http://openweathermap.org/img/wn/' + iconArray[5] + '@2x.png';
+}
