@@ -1,10 +1,16 @@
 // storing API Key in a global variable
-var apiKey = '6b1a2201b5db8a2ed60768e430f6c667';
+var apiKey = 'c66fd13d98b3cf7563c67bed97a37bf1';
 
 var cityFormEl = document.getElementById('cityForm');
 
 // getting City name element
 var cityNameEl = document.getElementById('cityName');
+
+// getting previous searches element
+var previousSearchEl = document.getElementById('previous-searches');
+
+// getting search history list item element
+var searchHistoryEl = document.getElementsByTagName('li');
 
 // getting date elements
 var dateEl0 = document.getElementById('date0');
@@ -59,11 +65,51 @@ var humidArray = [];
 var uvArray = [];
 var iconArray = [];
 
+// using local storage to save past searches
+var pastSearches = JSON.parse(localStorage.getItem('city'));
+
+if (!pastSearches) {
+  pastSearches = [];
+  previousSearchEl.classList.add('hide');
+}
+
+// // event listener for clicking the search history list
+// searchHistoryEl.addEventListener('click', function (event) {
+//   event.preventDefault();
+
+// });
+
+// event listener for clicking the search button
 cityFormEl.addEventListener('submit', function (event) {
   event.preventDefault();
+
   clearPreviousData();
 
   var cityLocation = document.getElementById('cityLocation').value.trim();
+
+  function saveSearch() {
+    var searchedCity = cityLocation;
+
+    pastSearches.push(searchedCity);
+    localStorage.setItem('city', JSON.stringify(pastSearches));
+
+    console.log(pastSearches);
+  }
+  saveSearch(pastSearches);
+  renderPastSearches(pastSearches);
+
+  function renderPastSearches(pastSearches) {
+    previousSearchEl.textContent = '';
+
+    for (var i = 0; i < pastSearches.length; i++) {
+      var pastSearchesLi = pastSearches[i];
+
+      var li = document.createElement('li');
+      li.textContent = pastSearchesLi;
+
+      previousSearchEl.appendChild(li);
+    }
+  }
 
   // fetch that gets the location's coordiantes
   fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + cityLocation + '&limit=5&appid=' + apiKey)
@@ -81,8 +127,6 @@ cityFormEl.addEventListener('submit', function (event) {
         var latCoordinates = coordinates.lat;
         var lonCoordinates = coordinates.lon;
         console.log(cityName);
-        console.log(latCoordinates);
-        console.log(lonCoordinates);
 
         // fetch using the coordinates obtained from the previous api fetch. I could only search by coordinates not by location name
         fetch('https://api.openweathermap.org/data/2.5/onecall?lat=' + latCoordinates + '&lon=' + lonCoordinates + '&exclude=minutely,hourly,alerts=&units=metric&appid=' + apiKey)
@@ -121,12 +165,6 @@ cityFormEl.addEventListener('submit', function (event) {
 
             uvRiskColour();
             updateWeatherBoxes();
-            console.log(dateArray);
-            console.log(tempArray);
-            console.log(windArray);
-            console.log(humidArray);
-            console.log(uvArray);
-            console.log(iconArray);
           });
       }
     });
@@ -196,15 +234,15 @@ function clearPreviousData() {
 }
 
 function uvRiskColour() {
-  if (uvIndexEL0.textContent <= 2) {
-    uvIndexEL0.classList.add('lowRisk');
-  } else if (uvIndexEL0.textContent >= 3 && uvIndexEL0.textContent <= 5) {
-    uvIndexEL0.classList.add('moderateRisk');
-  } else if (uvIndexEL0.textContent >= 6 && uvIndexEL0.textContent <= 7) {
-    uvIndexEL0.classList.add('highRisk');
-  } else if (uvIndexEL0.textContent >= 8 && uvIndexEL0.textContent <= 10) {
-    uvIndexEL0.classList.add('moderateRisk');
-  } else {
-    uvIndexEL0.classList.add('extremeRisk');
+  if (uvIndexEL0.textContent <= 2.99) {
+    uvIndexEL0.setAttribute('class', 'lowRisk');
+  } else if (uvIndexEL0.textContent >= 3 && uvIndexEL0.textContent <= 5.99) {
+    uvIndexEL0.setAttribute('class', 'moderateRisk');
+  } else if (uvIndexEL0.textContent >= 6 && uvIndexEL0.textContent <= 7.99) {
+    uvIndexEL0.setAttribute('class', 'highRisk');
+  } else if (uvIndexEL0.textContent >= 8 && uvIndexEL0.textContent <= 10.99) {
+    uvIndexEL0.setAttribute('class', 'moderateRisk');
+  } else if (uvIndexEL0.textContent > 11) {
+    uvIndexEL0.setAttribute('class', 'extremeRisk');
   }
 }
