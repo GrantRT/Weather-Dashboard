@@ -32,7 +32,7 @@
             <ul id="pastSearches" class="bg-light pt-4"></ul>
           </form>
         <!-- Previous searches to be displayed using local storage -->
-        <div class="card">
+        <div id ="previous-searches-card" class="card">
           <ul id="previous-searches" class="list-group list-group-flush bg-light"></ul>
         </div>
       </div>
@@ -42,6 +42,7 @@
         <div id="todays-weather-card" class="card row col-12">
           <div class="card-body">
             <h5 id="cityName" class="card-title"></h5>
+            <h5 id="today" class="card-title">Today</h5>
             <h5 id="date0" class="card-subtitle mb-2"></h5>
             <h6 id="temp0" class="card-subtitle mb-2"></h6>
             <h6 id="wind0" class="card-subtitle mb-2"></h6>
@@ -101,7 +102,7 @@
         </div>
       </div>
     </div>
-
+   
     <!-- Linking moment.js and javascript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/script.js"></script>
