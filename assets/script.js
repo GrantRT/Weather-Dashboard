@@ -157,11 +157,73 @@ function citySearch() {
     });
 }
 
-// // event listener for clicking the search history list
-// searchHistoryEl.addEventListener('click', function () {
-//   clearPreviousData();
-//   citySearch();
-// });
+// event listener for clicking the search history list
+previousSearchEl.addEventListener('click', selectCity);
+
+function selectCity(event) {
+  if (event) {
+    var searchHistorySelect = event.target.textContent;
+
+    // fetch that gets the location's coordiantes
+    fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + searchHistorySelect + '&limit=5&appid=' + apiKey)
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (data) {
+        for (var i = 0; i < data.length; i++) {
+          var coordinates = data[i];
+
+          // displaying the city name
+          var cityName = coordinates.name;
+          cityNameEl.textContent = cityName;
+
+          var latCoordinates = coordinates.lat;
+          var lonCoordinates = coordinates.lon;
+          console.log(cityName);
+
+          // fetch using the coordinates obtained from the previous api fetch. I could only search by coordinates not by location name
+          fetch('https://api.openweathermap.org/data/2.5/onecall?lat=' + latCoordinates + '&lon=' + lonCoordinates + '&exclude=minutely,hourly,alerts=&units=metric&appid=' + apiKey)
+            .then(function (res) {
+              return res.json();
+            })
+            .then(function (data) {
+              console.log(data);
+
+              // looping 6 times as I want the current day and the next 5 days forecast
+              for (var i = 0; i < 6; i++) {
+                var weatherInfo = data.daily[i];
+
+                var date = weatherInfo.dt;
+                // convert the date from unix to a more user friendly format
+                var unixFormat = moment.unix(date).format('MMM Do YYYY');
+                dateArray.push(unixFormat);
+
+                var temp = weatherInfo.temp.day;
+                tempArray.push(temp);
+
+                var windspeed = weatherInfo.wind_speed;
+                windArray.push(windspeed);
+
+                var humidity = weatherInfo.humidity;
+                humidArray.push(humidity);
+
+                var uvIndex = weatherInfo.uvi;
+                uvArray.push(uvIndex);
+
+                var weatherIcon = weatherInfo.weather[0].icon;
+                iconArray.push(weatherIcon);
+              }
+
+              weatherCardsEl.classList.remove('hide');
+
+              updateWeatherBoxes();
+              uvRiskColour();
+              clearPreviousData();
+            });
+        }
+      });
+  }
+}
 
 // event listener for clicking the search button
 cityFormEl.addEventListener('submit', function (event) {
