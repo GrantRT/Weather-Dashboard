@@ -1,9 +1,10 @@
 // storing API Key in a global variable
 var apiKey = '1ed16faaaf4ec7519219183d278b85c8';
 
+// getting cityForm element
 var cityFormEl = document.getElementById('cityForm');
 
-// getting City name element
+// getting cityName element
 var cityNameEl = document.getElementById('cityName');
 
 // getting previous searches element
@@ -80,7 +81,7 @@ function renderPastSearches(pastSearches) {
   for (var i = 0; i < pastSearches.length; i++) {
     var pastSearchesLi = pastSearches[i];
 
-    if (pastSearches[i] == '') {
+    if (pastSearchesLi == '') {
       return;
     } else {
       var li = document.createElement('li');
