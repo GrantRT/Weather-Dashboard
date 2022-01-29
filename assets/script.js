@@ -288,6 +288,7 @@ function updateWeatherBoxes() {
   iconEl5.src = 'http://openweathermap.org/img/wn/' + iconArray[5] + '@2x.png';
 }
 
+// function to clear the previous data before rendering the new
 function clearPreviousData() {
   if (dateArray.length !== 0) {
     dateArray = [];
@@ -309,6 +310,7 @@ function clearPreviousData() {
   }
 }
 
+// function that applies a coloured background to the uv index
 function uvRiskColour() {
   if (uvIndexEl0.textContent <= 2.99) {
     uvIndexEl0.setAttribute('class', 'lowRisk');
@@ -318,7 +320,7 @@ function uvRiskColour() {
     uvIndexEl0.setAttribute('class', 'highRisk');
   } else if (uvIndexEl0.textContent >= 8 && uvIndexEl0.textContent <= 10.99) {
     uvIndexEl0.setAttribute('class', 'veryHighRisk');
-  } else if (uvIndexEl0.textContent > 11) {
+  } else {
     uvIndexEl0.setAttribute('class', 'extremeRisk');
   }
 }
