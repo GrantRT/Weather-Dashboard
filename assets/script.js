@@ -281,12 +281,12 @@ function updateWeatherBoxes() {
   uvIndexEl0.textContent = uvArray[0];
 
   // displaying the icons
-  iconEl0.src = 'http://openweathermap.org/img/wn/' + iconArray[0] + '@2x.png';
-  iconEl1.src = 'http://openweathermap.org/img/wn/' + iconArray[1] + '@2x.png';
-  iconEl2.src = 'http://openweathermap.org/img/wn/' + iconArray[2] + '@2x.png';
-  iconEl3.src = 'http://openweathermap.org/img/wn/' + iconArray[3] + '@2x.png';
-  iconEl4.src = 'http://openweathermap.org/img/wn/' + iconArray[4] + '@2x.png';
-  iconEl5.src = 'http://openweathermap.org/img/wn/' + iconArray[5] + '@2x.png';
+  iconEl0.src = 'https://openweathermap.org/img/wn/' + iconArray[0] + '@2x.png';
+  iconEl1.src = 'https://openweathermap.org/img/wn/' + iconArray[1] + '@2x.png';
+  iconEl2.src = 'https://openweathermap.org/img/wn/' + iconArray[2] + '@2x.png';
+  iconEl3.src = 'https://openweathermap.org/img/wn/' + iconArray[3] + '@2x.png';
+  iconEl4.src = 'https://openweathermap.org/img/wn/' + iconArray[4] + '@2x.png';
+  iconEl5.src = 'https://openweathermap.org/img/wn/' + iconArray[5] + '@2x.png';
 }
 
 // function to clear the previous data before rendering the new
