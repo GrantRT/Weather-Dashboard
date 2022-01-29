@@ -109,7 +109,7 @@ function citySearch() {
     return;
   } else {
     // fetch that gets the location's coordiantes
-    fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + cityLocation + '&limit=5&appid=' + apiKey)
+    fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + cityLocation + '&limit=5&appid=' + apiKey)
       .then(function (res) {
         return res.json();
       })
@@ -177,7 +177,7 @@ function selectCity(event) {
     var searchHistorySelect = event.target.textContent;
 
     // fetch that gets the location's coordiantes
-    fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + searchHistorySelect + '&limit=5&appid=' + apiKey)
+    fetch('https://api.openweathermap.org/geo/1.0/direct?q=' + searchHistorySelect + '&limit=5&appid=' + apiKey)
       .then(function (res) {
         return res.json();
       })
