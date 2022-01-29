@@ -160,6 +160,7 @@ function citySearch() {
 // event listener for clicking the search history list
 previousSearchEl.addEventListener('click', selectCity);
 
+// function to run fetch if the city is selected from history
 function selectCity(event) {
   if (event) {
     var searchHistorySelect = event.target.textContent;
@@ -306,7 +307,7 @@ function uvRiskColour() {
   } else if (uvIndexEL0.textContent >= 6 && uvIndexEL0.textContent <= 7.99) {
     uvIndexEL0.setAttribute('class', 'highRisk');
   } else if (uvIndexEL0.textContent >= 8 && uvIndexEL0.textContent <= 10.99) {
-    uvIndexEL0.setAttribute('class', 'moderateRisk');
+    uvIndexEL0.setAttribute('class', 'veryHighRisk');
   } else if (uvIndexEL0.textContent > 11) {
     uvIndexEL0.setAttribute('class', 'extremeRisk');
   }
