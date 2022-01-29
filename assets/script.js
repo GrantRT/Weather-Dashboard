@@ -9,9 +9,6 @@ var cityNameEl = document.getElementById('cityName');
 // getting previous searches element
 var previousSearchEl = document.getElementById('previous-searches');
 
-// getting search history list item element
-var searchHistoryEl = document.getElementsByTagName('li');
-
 // getting date elements
 var dateEl0 = document.getElementById('date0');
 var dateEl1 = document.getElementById('date1');
@@ -45,7 +42,7 @@ var humidEl4 = document.getElementById('humid4');
 var humidEl5 = document.getElementById('humid5');
 
 // getting UV elements
-var uvIndexEL0 = document.getElementById('uvIndex0');
+var uvIndexEl0 = document.getElementById('uvIndex');
 
 // getting icon elements
 var iconEl0 = document.getElementById('icon0');
@@ -58,6 +55,7 @@ var iconEl5 = document.getElementById('icon5');
 // getting the weather cards element
 var weatherCardsEl = document.getElementById('weather-cards');
 
+// empty arrays for the different types of data
 var dateArray = [];
 var tempArray = [];
 var windArray = [];
@@ -72,9 +70,10 @@ if (!pastSearches) {
   pastSearches = [];
   previousSearchEl.classList.add('hide');
 }
-
+// calls the renderPastSearches function so that they are viewable on page load
 renderPastSearches(pastSearches);
 
+// function to render the past searches
 function renderPastSearches(pastSearches) {
   previousSearchEl.textContent = '';
 
@@ -87,6 +86,8 @@ function renderPastSearches(pastSearches) {
     previousSearchEl.appendChild(li);
   }
 }
+
+// function to run the fetch when a city is searched
 function citySearch() {
   var cityLocation = document.getElementById('cityLocation').value.trim();
 
@@ -267,7 +268,7 @@ function updateWeatherBoxes() {
   humidEl4.textContent = 'Humidity: ' + humidArray[4] + '%';
   humidEl5.textContent = 'Humidity: ' + humidArray[5] + '%';
   // displaying the UV Index
-  uvIndexEL0.textContent = uvArray[0];
+  uvIndexEl0.textContent = uvArray[0];
 
   // displaying the icons
   iconEl0.src = 'http://openweathermap.org/img/wn/' + iconArray[0] + '@2x.png';
@@ -300,15 +301,15 @@ function clearPreviousData() {
 }
 
 function uvRiskColour() {
-  if (uvIndexEL0.textContent <= 2.99) {
-    uvIndexEL0.setAttribute('class', 'lowRisk');
-  } else if (uvIndexEL0.textContent >= 3 && uvIndexEL0.textContent <= 5.99) {
-    uvIndexEL0.setAttribute('class', 'moderateRisk');
-  } else if (uvIndexEL0.textContent >= 6 && uvIndexEL0.textContent <= 7.99) {
-    uvIndexEL0.setAttribute('class', 'highRisk');
-  } else if (uvIndexEL0.textContent >= 8 && uvIndexEL0.textContent <= 10.99) {
-    uvIndexEL0.setAttribute('class', 'veryHighRisk');
-  } else if (uvIndexEL0.textContent > 11) {
-    uvIndexEL0.setAttribute('class', 'extremeRisk');
+  if (uvIndexEl0.textContent <= 2.99) {
+    uvIndexEl0.setAttribute('class', 'lowRisk');
+  } else if (uvIndexEl0.textContent >= 3 && uvIndexEl0.textContent <= 5.99) {
+    uvIndexEl0.setAttribute('class', 'moderateRisk');
+  } else if (uvIndexEl0.textContent >= 6 && uvIndexEl0.textContent <= 7.99) {
+    uvIndexEl0.setAttribute('class', 'highRisk');
+  } else if (uvIndexEl0.textContent >= 8 && uvIndexEl0.textContent <= 10.99) {
+    uvIndexEl0.setAttribute('class', 'veryHighRisk');
+  } else if (uvIndexEl0.textContent > 11) {
+    uvIndexEl0.setAttribute('class', 'extremeRisk');
   }
 }
