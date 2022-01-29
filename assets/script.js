@@ -321,7 +321,7 @@ function uvRiskColour() {
     uvIndexEl0.setAttribute('class', 'highRisk');
   } else if (uvIndexEl0.textContent >= 8 && uvIndexEl0.textContent <= 10.99) {
     uvIndexEl0.setAttribute('class', 'veryHighRisk');
-  } else {
+  } else if (uvIndexEl0.textContent >= 11) {
     uvIndexEl0.setAttribute('class', 'extremeRisk');
   }
 }
