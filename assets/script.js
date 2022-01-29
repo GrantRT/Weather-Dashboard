@@ -73,18 +73,7 @@ if (!pastSearches) {
   previousSearchEl.classList.add('hide');
 }
 
-// // event listener for clicking the search history list
-// searchHistoryEl.addEventListener('click', function (event) {
-//   event.preventDefault();
-
-// });
-
-// event listener for clicking the search button
-cityFormEl.addEventListener('submit', function (event) {
-  event.preventDefault();
-
-  clearPreviousData();
-
+function citySearch() {
   var cityLocation = document.getElementById('cityLocation').value.trim();
 
   function saveSearch() {
@@ -168,6 +157,20 @@ cityFormEl.addEventListener('submit', function (event) {
           });
       }
     });
+}
+
+// // event listener for clicking the search history list
+// searchHistoryEl.addEventListener('click', function () {
+//   clearPreviousData();
+//   citySearch();
+// });
+
+// event listener for clicking the search button
+cityFormEl.addEventListener('submit', function (event) {
+  event.preventDefault();
+
+  citySearch();
+  clearPreviousData();
 });
 
 // function to update the weather boxes with the data
