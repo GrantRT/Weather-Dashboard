@@ -91,9 +91,7 @@ function citySearch() {
   var cityLocation = document.getElementById('cityLocation').value.trim();
 
   function saveSearch() {
-    var searchedCity = cityLocation;
-
-    pastSearches.push(searchedCity);
+    pastSearches.push(cityLocation);
     localStorage.setItem('city', JSON.stringify(pastSearches));
 
     console.log(pastSearches);
