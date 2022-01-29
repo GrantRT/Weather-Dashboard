@@ -1,5 +1,5 @@
 // storing API Key in a global variable
-var apiKey = 'c66fd13d98b3cf7563c67bed97a37bf1';
+var apiKey = '1ed16faaaf4ec7519219183d278b85c8';
 
 var cityFormEl = document.getElementById('cityForm');
 
@@ -80,10 +80,14 @@ function renderPastSearches(pastSearches) {
   for (var i = 0; i < pastSearches.length; i++) {
     var pastSearchesLi = pastSearches[i];
 
-    var li = document.createElement('li');
-    li.textContent = pastSearchesLi;
+    if (pastSearches[i] == '') {
+      return;
+    } else {
+      var li = document.createElement('li');
+      li.textContent = pastSearchesLi;
 
-    previousSearchEl.appendChild(li);
+      previousSearchEl.appendChild(li);
+    }
   }
 }
 
@@ -99,63 +103,68 @@ function citySearch() {
   }
   saveSearch(pastSearches);
 
-  // fetch that gets the location's coordiantes
-  fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + cityLocation + '&limit=5&appid=' + apiKey)
-    .then(function (res) {
-      return res.json();
-    })
-    .then(function (data) {
-      for (var i = 0; i < data.length; i++) {
-        var coordinates = data[i];
+  if (cityLocation == '') {
+    alert('Please enter a location');
+    return;
+  } else {
+    // fetch that gets the location's coordiantes
+    fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + cityLocation + '&limit=5&appid=' + apiKey)
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (data) {
+        for (var i = 0; i < data.length; i++) {
+          var coordinates = data[i];
 
-        // displaying the city name
-        var cityName = coordinates.name;
-        cityNameEl.textContent = cityName;
+          // displaying the city name
+          var cityName = coordinates.name;
+          cityNameEl.textContent = cityName;
 
-        var latCoordinates = coordinates.lat;
-        var lonCoordinates = coordinates.lon;
-        console.log(cityName);
+          var latCoordinates = coordinates.lat;
+          var lonCoordinates = coordinates.lon;
+          console.log(cityName);
 
-        // fetch using the coordinates obtained from the previous api fetch. I could only search by coordinates not by location name
-        fetch('https://api.openweathermap.org/data/2.5/onecall?lat=' + latCoordinates + '&lon=' + lonCoordinates + '&exclude=minutely,hourly,alerts=&units=metric&appid=' + apiKey)
-          .then(function (res) {
-            return res.json();
-          })
-          .then(function (data) {
-            console.log(data);
+          // fetch using the coordinates obtained from the previous api fetch. I could only search by coordinates not by location name
+          fetch('https://api.openweathermap.org/data/2.5/onecall?lat=' + latCoordinates + '&lon=' + lonCoordinates + '&exclude=minutely,hourly,alerts=&units=metric&appid=' + apiKey)
+            .then(function (res) {
+              return res.json();
+            })
+            .then(function (data) {
+              console.log(data);
 
-            // looping 6 times as I want the current day and the next 5 days forecast
-            for (var i = 0; i < 6; i++) {
-              var weatherInfo = data.daily[i];
+              // looping 6 times as I want the current day and the next 5 days forecast
+              for (var i = 0; i < 6; i++) {
+                var weatherInfo = data.daily[i];
 
-              var date = weatherInfo.dt;
-              // convert the date from unix to a more user friendly format
-              var unixFormat = moment.unix(date).format('MMM Do YYYY');
-              dateArray.push(unixFormat);
+                var date = weatherInfo.dt;
+                // convert the date from unix to a more user friendly format
+                var unixFormat = moment.unix(date).format('MMM Do YYYY');
+                dateArray.push(unixFormat);
 
-              var temp = weatherInfo.temp.day;
-              tempArray.push(temp);
+                var temp = weatherInfo.temp.day;
+                tempArray.push(temp);
 
-              var windspeed = weatherInfo.wind_speed;
-              windArray.push(windspeed);
+                var windspeed = weatherInfo.wind_speed;
+                windArray.push(windspeed);
 
-              var humidity = weatherInfo.humidity;
-              humidArray.push(humidity);
+                var humidity = weatherInfo.humidity;
+                humidArray.push(humidity);
 
-              var uvIndex = weatherInfo.uvi;
-              uvArray.push(uvIndex);
+                var uvIndex = weatherInfo.uvi;
+                uvArray.push(uvIndex);
 
-              var weatherIcon = weatherInfo.weather[0].icon;
-              iconArray.push(weatherIcon);
-            }
+                var weatherIcon = weatherInfo.weather[0].icon;
+                iconArray.push(weatherIcon);
+              }
 
-            weatherCardsEl.classList.remove('hide');
+              weatherCardsEl.classList.remove('hide');
 
-            uvRiskColour();
-            updateWeatherBoxes();
-          });
-      }
-    });
+              uvRiskColour();
+              updateWeatherBoxes();
+            });
+        }
+      });
+  }
 }
 
 // event listener for clicking the search history list
