@@ -73,6 +73,20 @@ if (!pastSearches) {
   previousSearchEl.classList.add('hide');
 }
 
+renderPastSearches(pastSearches);
+
+function renderPastSearches(pastSearches) {
+  previousSearchEl.textContent = '';
+
+  for (var i = 0; i < pastSearches.length; i++) {
+    var pastSearchesLi = pastSearches[i];
+
+    var li = document.createElement('li');
+    li.textContent = pastSearchesLi;
+
+    previousSearchEl.appendChild(li);
+  }
+}
 function citySearch() {
   var cityLocation = document.getElementById('cityLocation').value.trim();
 
@@ -85,20 +99,6 @@ function citySearch() {
     console.log(pastSearches);
   }
   saveSearch(pastSearches);
-  renderPastSearches(pastSearches);
-
-  function renderPastSearches(pastSearches) {
-    previousSearchEl.textContent = '';
-
-    for (var i = 0; i < pastSearches.length; i++) {
-      var pastSearchesLi = pastSearches[i];
-
-      var li = document.createElement('li');
-      li.textContent = pastSearchesLi;
-
-      previousSearchEl.appendChild(li);
-    }
-  }
 
   // fetch that gets the location's coordiantes
   fetch('http://api.openweathermap.org/geo/1.0/direct?q=' + cityLocation + '&limit=5&appid=' + apiKey)
@@ -171,6 +171,8 @@ cityFormEl.addEventListener('submit', function (event) {
 
   citySearch();
   clearPreviousData();
+  renderPastSearches(pastSearches);
+  previousSearchEl.classList.remove('hide');
 });
 
 // function to update the weather boxes with the data
